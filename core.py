@@ -15,7 +15,7 @@ frame = 50
 
 squares.Square.height = Ceil_H
 squares.Square.wight = Ceil_W
-
+main_scene = True
 #colors
 color_back = (70,60,190)
 color_field_info = (130,160,130,30)
@@ -213,16 +213,29 @@ while activiti:
             activiti = False
         elif ev.type == pygame.KEYDOWN:
             if ev.key == pygame.K_UP:
-                up = True
+                if main_scene:
+                    menu.key_up =True
+
+                else:
+                    up = True
             elif ev.key == pygame.K_DOWN:
                 down = True
             elif ev.key == pygame.K_RIGHT:
                 right = True
             elif ev.key == pygame.K_LEFT:
                 left = True
+            elif ev.key == pygame.K_SPACE:
+                if main_scene:
+                    menu.key_space = True
 
-    updating()
-    drawing()
+    if main_scene:
+        menu.draw(disp,DISP_W-100,DISP_H-50)
+        menu.update()
+        if menu.isStart:
+            main_scene = False
+    else:
+        updating()
+        drawing()
     pygame.display.flip()
     pygame.time.delay(frame)
     pass
