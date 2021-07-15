@@ -71,8 +71,49 @@ def show_grid(): #функция для отображения работы ма
 
 end_score=0
 END = False
-def end():#не доделанная функция отвечающая за окончание игры
+
+@staticmethod
+def gameOver(matrix): #функция отвечающая за окончание игры
+        testmatrix = matrix.copy()
+        a,b = testmatrix.shape
+        for i in range(a):
+            for j in range(b-1):
+                if testmatrix[i][j] == testmatrix[i][j+1]:                    # Если в каждой строке два соседних номера, игра не окончена
+                    print("Игра не окончена")
+                    return False
+        for i in range(b):
+            for j in range(a-1):
+                if testmatrix[j][i] == testmatrix[j+1][i]:
+                    print("Игра не окончена")
+                    return False
+        print("игра закончена")
+        return True
+ 
     pass
+
+  def combineList(self,rowlist): #Функция текущего счета
+        start_num = 0
+        end_num = Size-rowlist.count(0)-1
+        while start_num < end_num:
+            if rowlist[start_num] == rowlist[start_num+1]:
+                rowlist[start_num] *= 2
+                self.score += int(rowlist[start_num])                      # Возвращать накопленный счет каждый раз
+                rowlist[start_num+1:] = rowlist[start_num+2:]
+                rowlist.append(0)
+            start_num += 1
+        return rowlist
+
+    def removeZero(self,rowlist): #Функция обнуления счета
+        while True:
+            mid = rowlist[:]                      
+            try:
+                rowlist.remove(0)
+                rowlist.append(0)
+            except:
+                pass
+            if rowlist == mid:
+                break;
+        return self.combineList(rowlist)
 
 def drawing():
     disp.fill(color_back)
